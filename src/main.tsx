@@ -9,7 +9,7 @@ const projects: Project[] = [...root.querySelectorAll<HTMLElement>(".project")].
   return {
     title: card.querySelector("h3")!.textContent!,
     icon: card.querySelector("img")!.getAttribute("src")!,
-    paragraphs: [...card.querySelectorAll(".project-copy > p")].map(p => ({
+    paragraphs: [...card.querySelectorAll(".project-copy p")].map(p => ({
       text: p.textContent!.replace(/\s+/g, " ").trim(),
       emphasis: !!p.querySelector("strong"),
     })),

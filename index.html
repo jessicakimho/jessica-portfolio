@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
   <link rel="stylesheet" href="koi-pond.css">
-  <link rel="stylesheet" href="assets/project-carousel.css">
+  <link rel="stylesheet" href="assets/project-carousel.css?v=wider-carousel-7">
 
   <style>
     /* ---------- Your page ---------- */
@@ -266,12 +266,27 @@
     }
 
     .project {
+      /* Pill-like translucent backgrounds with a soft tint for each project. */
+      --project-tint: 240, 188, 85;
+      --project-icon: #F1D99B;
       display: flex;
       flex-direction: column;
       overflow: hidden;
       border: 1px solid rgba(183, 206, 212, 0.22);
       border-radius: 22px;
-      background: rgba(18, 40, 42, 0.5);
+      background: linear-gradient(135deg, rgba(var(--project-tint), 0.12), rgba(18, 40, 42, 0.6));
+    }
+
+    .project-theme-1,
+    .projects > .project:nth-child(2) {
+      --project-tint: 246, 179, 198;
+      --project-icon: #EDB6CA;
+    }
+
+    .project-theme-2,
+    .projects > .project:nth-child(3) {
+      --project-tint: 183, 206, 212;
+      --project-icon: #B7CED4;
     }
 
     .project-art {
@@ -281,15 +296,7 @@
       aspect-ratio: 4 / 3;
       flex-shrink: 0;
       overflow: hidden;
-      background: radial-gradient(ellipse at 35% 35%, #44627E, #183A40 65%, #10292A);
-    }
-
-    .project:nth-child(2) .project-art {
-      background: radial-gradient(ellipse at 65% 35%, #645265, #283D4B 60%, #142E33);
-    }
-
-    .project:nth-child(3) .project-art {
-      background: radial-gradient(ellipse at 40% 60%, #686148, #304B46 60%, #142E33);
+      background: radial-gradient(ellipse at 35% 35%, rgba(var(--project-tint), 0.12), transparent 75%);
     }
 
     .project-art::before,
@@ -314,13 +321,11 @@
       aspect-ratio: 1;
       border: 1px solid rgba(255, 255, 255, 0.55);
       border-radius: 32px;
-      background: linear-gradient(145deg, #FFF8DF, #F1D99B);
+      background: linear-gradient(145deg, #FFF5E9, var(--project-icon));
       box-shadow: 0 18px 40px rgba(6, 22, 24, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.65);
     }
 
     .project-app-icon img { display: block; width: 120px; height: 120px; object-fit: contain; }
-    .project:nth-child(2) .project-app-icon { background: linear-gradient(145deg, #F4EAFF, #D7C0F3); }
-    .project:nth-child(3) .project-app-icon { background: linear-gradient(145deg, #E5F5EF, #A9CFC7); }
 
     .project-copy {
       display: flex;
@@ -335,6 +340,7 @@
     }
 
     .project h3 {
+      text-align: center;
       margin: 0 0 12px;
       font-family: "Instrument Serif", Georgia, serif;
       font-size: 30px;
@@ -647,6 +653,6 @@
       }
     });
   </script>
-  <script src="assets/project-carousel.js" defer></script>
+  <script src="assets/project-carousel.js?v=wider-carousel-7" defer></script>
 </body>
 </html>

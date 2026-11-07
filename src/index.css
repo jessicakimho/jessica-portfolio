@@ -4,13 +4,29 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 
 #projects-root { display: block; margin-top: 28px; }
-.project-carousel .project { width: 100%; height: 100%; background: #243F4B; }
+/* Give the cards more room than the text column on wide screens. */
+.project-carousel {
+  position: relative;
+  left: 50%;
+  width: min(1400px, calc(100vw - 44px));
+  transform: translateX(-50%);
+}
+.project-carousel .project { width: 100%; height: 100%; }
 .project-carousel .project-art { width: 100%; height: 180px; aspect-ratio: auto; }
+/* Center the visible icon and title, excluding the art box's 20px of top space. */
+.project-carousel .project-heading {
+  flex-shrink: 0;
+  transform: translateY(calc(var(--project-card-height) / 2 - 50% - 11px));
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.project-carousel .is-selected .project-heading { transform: translateY(0); }
+.project-carousel .project-heading h3 { margin: 22px 22px 0; }
 .project-carousel .project-copy { min-height: 0; padding: 22px; }
 .project-carousel .project-copy > * { flex-shrink: 0; }
 .project-carousel .project-copy > p { margin-bottom: 16px; }
+/* Keep card heights steady while only the selected card reveals its description. */
+.project-carousel .project-description[aria-hidden="true"] { visibility: hidden; }
 .project-carousel [role="group"]:focus-visible { outline: 2px solid #F6B3C6 !important; outline-offset: 4px; border-radius: 22px; }
-.project-theme-1 .project-art { background: radial-gradient(ellipse at 65% 35%, #645265, #283D4B 60%, #142E33); }
-.project-theme-2 .project-art { background: radial-gradient(ellipse at 40% 60%, #686148, #304B46 60%, #142E33); }
-.project-theme-1 .project-app-icon { background: linear-gradient(145deg, #F4EAFF, #D7C0F3); }
-.project-theme-2 .project-app-icon { background: linear-gradient(145deg, #E5F5EF, #A9CFC7); }
+@media (prefers-reduced-motion: reduce) {
+  .project-carousel .project-heading { transition: none; }
+}
