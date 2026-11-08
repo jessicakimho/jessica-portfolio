@@ -197,6 +197,83 @@
       line-height: 1.8;
     }
 
+    .about-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      align-items: center;
+      gap: clamp(36px, 6vw, 80px);
+    }
+
+    .about-details { display: grid; gap: 24px; margin-top: 32px; }
+    .about-details h3 {
+      margin: 0 0 8px;
+      color: #F6B3C6;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .about-details p {
+      margin: 0;
+      color: #C6D3D5;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .about-details p + p { margin-top: 16px; }
+
+    /* Keep the pointer area steady while the portrait tilts inside it. */
+    .about-photo-stage { width: 100%; max-width: 400px; justify-self: center; }
+
+    .about-photo {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 100%;
+      max-width: 400px;
+      aspect-ratio: 4 / 5;
+      margin: 0;
+      overflow: hidden;
+      justify-self: center;
+      border-radius: 160px 160px 24px 24px;
+      background: radial-gradient(ellipse at 50% 30%, rgba(246, 179, 198, 0.14), transparent 70%), rgba(18, 40, 42, 0.35);
+      text-align: center;
+      /* Soft cast shadows lift the portrait off the water. */
+      box-shadow: 0 18px 28px rgba(6, 22, 24, 0.3), 0 32px 60px rgba(6, 22, 24, 0.2);
+      transition: transform 400ms ease, box-shadow 400ms ease;
+    }
+    .about-photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(255, 239, 245, 0.16), transparent 45%);
+    }
+    .about-photo img {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center bottom;
+      transition: transform 600ms ease;
+    }
+
+    @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+      .about-photo-stage:hover .about-photo {
+        transform: perspective(1000px) translateY(-8px) rotateX(var(--photo-tilt-x, 0deg)) rotateY(var(--photo-tilt-y, 0deg));
+        transition: transform 160ms ease-out, box-shadow 400ms ease;
+        box-shadow: 8px 26px 36px rgba(6, 22, 24, 0.32), 12px 42px 70px rgba(6, 22, 24, 0.24);
+      }
+      .about-photo-stage:hover img { transform: scale(1.025); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .about-photo, .about-photo img { transition: none; }
+    }
+
     .journey-list {
       list-style: none;
       margin: 48px 0 64px;
@@ -381,6 +458,16 @@
       gap: 64px;
     }
 
+    .contact-intro { display: flex; flex-direction: column; }
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: auto;
+      padding-top: 36px;
+    }
+
     .contact-form { display: grid; gap: 22px; }
     .field { display: grid; gap: 10px; }
     .field label { color: #EEE5E7; font-size: 14px; }
@@ -423,7 +510,7 @@
     .footer a { color: inherit; text-underline-offset: 4px; }
 
     @media (max-width: 760px) {
-      .projects, .contact-layout { grid-template-columns: 1fr; }
+      .projects, .contact-layout, .about-layout { grid-template-columns: 1fr; }
       .experience { grid-template-columns: 1fr; gap: 12px; }
       .contact-layout { gap: 36px; }
       .projects { max-width: 480px; }
@@ -450,7 +537,42 @@
   </section>
 
   <div class="below-pond">
+    <section id="about" class="page-section" aria-labelledby="about-title" tabindex="-1">
+      <div class="about-layout">
+        <div>
+          <p class="eyebrow">the person behind the screen</p>
+          <h2 id="about-title" class="section-title">about <span class="name">me</span></h2>
+          <p class="section-intro">I'm Jessica, a curious builder who loves turning thoughtful ideas into things people can use. Currently based in Los Angeles, CA.</p>
+
+          <!-- ✏️ Placeholder details: replace these with your education, interests and goals. -->
+          <div class="about-details">
+            <div>
+              <h3>education</h3>
+              <p>I'm a senior studying Computer Science and Business Administration at USC, where I'm exploring creative problem-solving and the way technology connects people.</p>
+            </div>
+            <div>
+              <h3>interests</h3>
+              <p>Outside of coding, you'll find me exploring Southern California, taking photos, and playing my favorite games. I'm always looking for something new to dive into.</p>
+            </div>
+            <div>
+              <h3>goals</h3>
+              <p>I want to build useful, accessible software, and bring a little more care and creativity to everyday experiences.</p>
+              <p>That being said, I'm looking for full-time opportunities in the realm of software engineering, forward deployed AI engineering, and product management.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ✏️ Your About Me photo. Replace assets/me.jpg to change it. -->
+        <div class="about-photo-stage">
+        <figure class="about-photo">
+          <img src="assets/me.jpg" alt="Jessica in a garden" width="3207" height="4810" loading="lazy" decoding="async">
+        </figure>
+        </div>
+      </div>
+    </section>
+
     <section id="journey" class="page-section" aria-labelledby="journey-title" tabindex="-1">
+      <div class="section-divider">
       <p class="eyebrow">a little about my path so far</p>
       <h2 id="journey-title" class="section-title">my <span class="name">journey</span></h2>
       <p class="section-intro">The places I've worked and the things I've learned along the way.</p>
@@ -479,6 +601,7 @@
       <!-- ✏️ Replace resume.pdf in this folder with your own résumé, keeping the same filename. -->
       <a class="pill" href="resume.pdf" target="_blank" rel="noopener">view my résumé <span aria-hidden="true">↗</span><span class="resume-format"> (PDF)</span></a>
       <p class="resume-note">check out my résumé for more details.</p>
+      </div>
     </section>
 
     <section id="work" class="page-section" aria-labelledby="work-title" tabindex="-1">
@@ -495,7 +618,7 @@
           </div>
           <div class="project-copy">
             <h3>ProductBee</h3>
-            <p>a product planning dashboard that converts product ideas into PRDs and feature roadmaps, generating structured requirements and development timelines for cross-functional teams</p>
+            <p>turn product ideas into generated plans, feature roadmaps, and actionable tasks—all in one shared workspace to help teams start building faster.</p>
             <p><strong>HackUTD 2025</strong></p>
             <a class="pill" href="https://github.com/jessicakimho/ProductBee" target="_blank" rel="noopener noreferrer" aria-label="ProductBee on GitHub (opens in a new tab)">github link</a>
           </div>
@@ -506,8 +629,8 @@
           </div>
           <div class="project-copy">
             <h3>TwitchBits</h3>
-            <p>an analytics platform for streamers that ingests livestream data from Twitch to analyze viewer behavior, game
-              performance, and channel growth over time</p>
+            <p>optimize your streaming content strategy by understanding your viewers' behavior, game
+              performance, and channel growth over time.</p>
             <span class="pill">coming soon</span>
           </div>
         </article>
@@ -527,10 +650,15 @@
 
     <section id="contact" class="page-section" aria-labelledby="contact-title" tabindex="-1">
       <div class="contact-layout">
-        <div>
+        <div class="contact-intro">
           <p class="eyebrow">let's make a little ripple</p>
           <h2 id="contact-title" class="section-title">say <span class="name">hi</span></h2>
           <p class="section-intro">Have a project in mind, a question, or just want to say hello? I'd love to hear from you.</p>
+          <nav class="social-links" aria-label="Social profiles">
+            <a class="pill" href="https://www.linkedin.com/in/jessicakimho" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (opens in a new tab)">LinkedIn <span aria-hidden="true">↗</span></a>
+            <a class="pill" href="https://x.com/juhicodes?s=11" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter (opens in a new tab)">X / Twitter <span aria-hidden="true">↗</span></a>
+            <a class="pill" href="https://github.com/jessicakimho" target="_blank" rel="noopener noreferrer" aria-label="GitHub (opens in a new tab)">GitHub <span aria-hidden="true">↗</span></a>
+          </nav>
         </div>
 
         <form class="contact-form" id="contact-form" action="https://formspree.io/f/mrppvkba" method="POST">
@@ -560,9 +688,10 @@
   <script>
     // ✏️ Your links. Each one is a koi with a caption that follows it around. [] for none.
     const links = [
-      { label: "my journey", href: "#journey", koi: "sakura", x: 0.22, tint: "#F6B3C6", ink: "#FBE9EF" },
-      { label: "my projects", href: "#work", koi: "gold", x: 0.5, tint: "#F0BC55", ink: "#FBE9C4" },
-      { label: "say hi", href: "#contact", koi: "platinum", x: 0.78, tint: "#E6ECF6", ink: "#EEF1F6" },
+      { label: "about me", href: "#about", koi: "blush", x: 0.16, y: 0.7, tint: "#F6B3C6", ink: "#FBE9EF" },
+      { label: "my journey", href: "#journey", koi: "sakura", x: 0.38, y: 0.82, tint: "#F6B3C6", ink: "#FBE9EF" },
+      { label: "my projects", href: "#work", koi: "gold", x: 0.62, y: 0.7, tint: "#F0BC55", ink: "#FBE9C4" },
+      { label: "say hi", href: "#contact", koi: "platinum", x: 0.84, y: 0.82, tint: "#E6ECF6", ink: "#EEF1F6" },
     ];
 
     // ✏️ Your look. Every setting is in the guide; anything you leave out keeps its default.
@@ -610,6 +739,28 @@
         buttons: event.buttons,
       }));
     }
+
+    // Tilt toward the pointer in every direction, using the unmoving outer frame.
+    const photoStage = document.querySelector(".about-photo-stage");
+    const photoMotion = window.matchMedia("(hover: hover) and (prefers-reduced-motion: no-preference)");
+
+    function resetPhotoTilt() {
+      photoStage.style.removeProperty("--photo-tilt-x");
+      photoStage.style.removeProperty("--photo-tilt-y");
+    }
+
+    photoStage.addEventListener("pointermove", (event) => {
+      if (!photoMotion.matches || event.pointerType === "touch") return;
+      const bounds = photoStage.getBoundingClientRect();
+      const x = Math.max(-1, Math.min(1, (event.clientX - bounds.left) / bounds.width * 2 - 1));
+      const y = Math.max(-1, Math.min(1, (event.clientY - bounds.top) / bounds.height * 2 - 1));
+      photoStage.style.setProperty("--photo-tilt-x", `${-y * 6}deg`);
+      photoStage.style.setProperty("--photo-tilt-y", `${x * 6}deg`);
+    }, { passive: true });
+    photoStage.addEventListener("pointerleave", resetPhotoTilt);
+    photoStage.addEventListener("pointercancel", resetPhotoTilt);
+    photoMotion.addEventListener("change", resetPhotoTilt);
+    window.addEventListener("blur", resetPhotoTilt);
 
     // Send through Formspree and keep the visitor on the page while showing the result.
     document.getElementById("contact-form").addEventListener("submit", async (event) => {
